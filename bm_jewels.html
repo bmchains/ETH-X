@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BM Jewels</title>
+  <style>
+    :root{
+      --bg:#05060b;
+      --bg2:#0d1020;
+      --panel:rgba(12,15,27,.78);
+      --line:rgba(255,255,255,.1);
+      --text:#f5f7ff;
+      --muted:#99a4be;
+      --gold:#ffd37d;
+      --cyan:#8ce8ff;
+      --pink:#ff6bc7;
+      --blue:#7e8dff;
+      --shadow:0 30px 80px rgba(0,0,0,.5);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,211,125,.1), transparent 22%),
+        radial-gradient(circle at 85% 12%, rgba(126,141,255,.12), transparent 24%),
+        radial-gradient(circle at 50% 56%, rgba(255,107,199,.08), transparent 28%),
+        linear-gradient(180deg,#06070d 0%, #090b14 48%, #05060b 100%);
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.66), transparent 88%);
+      pointer-events:none;
+    }
+    a{color:inherit}
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(16px);
+      background:rgba(5,7,12,.6);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner, section, footer{
+      max-width:1320px;
+      margin:0 auto;
+      padding-left:28px;
+      padding-right:28px;
+    }
+    .nav-inner{
+      min-height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      font-size:.8rem;
+    }
+    .brand img{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      box-shadow:0 0 24px rgba(255,211,125,.18);
+    }
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .nav-links a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:10px;
+      transition:.25s ease;
+    }
+    .nav-links a:hover{
+      color:var(--text);
+      background:rgba(255,255,255,.04);
+    }
+    section{padding-top:84px; padding-bottom:84px}
+    .hero{
+      min-height:calc(100vh - 74px);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:34px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,211,125,.18);
+      background:rgba(255,211,125,.08);
+      color:#ffe2a7;
+      text-transform:uppercase;
+      font-size:.84rem;
+      letter-spacing:.14em;
+    }
+    h1{
+      margin:18px 0 14px;
+      font-size:clamp(3.6rem,8vw,7rem);
+      line-height:.95;
+      letter-spacing:-.06em;
+    }
+    .gradient{
+      background:linear-gradient(120deg,#ffffff 10%, #ffd77f 34%, #8ce8ff 62%, #ff78c8 88%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 0 30px rgba(255,211,125,.15);
+    }
+    .lead{
+      color:#d7deee;
+      line-height:1.82;
+      font-size:1.08rem;
+      max-width:720px;
+      margin:0 0 14px;
+    }
+    .lead.alt{color:var(--muted)}
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:28px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      padding:14px 20px;
+      border-radius:16px;
+      font-weight:700;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{
+      color:#08111d;
+      background:linear-gradient(135deg,#ffe3a8,#ffd37d 45%,#9fe8ff);
+      box-shadow:0 20px 50px rgba(255,211,125,.22);
+    }
+    .btn.secondary{
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+    }
+    .hero-visual{
+      position:relative;
+      min-height:760px;
+    }
+    .hero-frame{
+      position:absolute;
+      inset:0 40px 86px 0;
+      overflow:hidden;
+      border-radius:34px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(7,10,18,.18), rgba(7,10,18,.88)),
+        url('assets/antverse/bmjewels/collection_banner.jpg') center/cover no-repeat;
+      box-shadow:var(--shadow);
+    }
+    .hero-frame::before{
+      content:"";
+      position:absolute;
+      inset:-18%;
+      background:conic-gradient(from 180deg, rgba(255,211,125,.2), transparent, rgba(140,232,255,.13), transparent, rgba(255,107,199,.12), transparent, rgba(255,211,125,.2));
+      animation:spin 18s linear infinite;
+      mix-blend-mode:screen;
+    }
+    .hero-ring{
+      position:absolute;
+      inset:88px 54px 126px 54px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+      border-radius:30px;
+      background:rgba(8,11,18,.5);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(12px);
+    }
+    .hero-ring img{
+      width:min(100%, 450px);
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border-radius:50%;
+      border:12px solid rgba(255,255,255,.06);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 50px rgba(255,211,125,.2),
+        0 0 120px rgba(140,232,255,.1);
+    }
+    .float-card{
+      position:absolute;
+      width:140px;
+      height:140px;
+      padding:10px;
+      border-radius:24px;
+      overflow:hidden;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+      box-shadow:0 18px 40px rgba(0,0,0,.36);
+      animation:float 8s ease-in-out infinite;
+      z-index:3;
+    }
+    .float-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:18px;
+      display:block;
+    }
+    .f1{top:36px; right:0}
+    .f2{right:32px; bottom:0; animation-delay:-2s}
+    .f3{left:26px; bottom:74px; animation-delay:-4s}
+    .hero-note{
+      position:absolute;
+      left:26px;
+      right:26px;
+      bottom:24px;
+      z-index:4;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:end;
+    }
+    .hero-note strong{display:block; margin-bottom:6px; font-size:1.18rem}
+    .hero-note span{color:var(--muted); line-height:1.58; max-width:420px}
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      white-space:nowrap;
+    }
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:20px;
+      margin-bottom:28px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:clamp(2rem,4vw,3.5rem);
+      letter-spacing:-.04em;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.74;
+      max-width:680px;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+    .stat{
+      padding:20px;
+    }
+    .stat span{
+      display:block;
+      color:var(--muted);
+      font-size:.8rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .stat strong{
+      font-size:1.06rem;
+      line-height:1.45;
+    }
+    .intro-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin-top:26px;
+    }
+    .intro-copy,
+    .trait-panel{
+      padding:26px;
+    }
+    .intro-copy p,
+    .trait-panel p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.78;
+    }
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+    .tag{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#dfe8ff;
+      font-size:.86rem;
+    }
+    .items-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+    .item-card{
+      overflow:hidden;
+      transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .item-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(255,211,125,.18);
+      box-shadow:0 34px 90px rgba(0,0,0,.55);
+    }
+    .item-media{
+      aspect-ratio:1/1;
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .item-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .6s ease;
+    }
+    .item-card:hover .item-media img{transform:scale(1.06)}
+    .item-media.placeholder{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at 32% 28%, rgba(255,255,255,.6), transparent 16%),
+        conic-gradient(from 220deg, #78d8ff, #ffd06b, #ff7acb, #89e8ff, #ffd06b);
+      position:relative;
+    }
+    .item-media.placeholder::before{
+      content:"";
+      width:62%;
+      height:62%;
+      border-radius:50%;
+      border:16px solid rgba(8,10,16,.82);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.08),
+        0 0 40px rgba(255,211,125,.18);
+      background:radial-gradient(circle, rgba(255,255,255,.18), rgba(255,255,255,.02));
+    }
+    .item-body{
+      padding:18px;
+    }
+    .item-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:start;
+      margin-bottom:12px;
+    }
+    .item-top strong{
+      font-size:1.04rem;
+      line-height:1.38;
+    }
+    .item-top span{
+      color:var(--muted);
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .item-body p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.72;
+      min-height:88px;
+    }
+    .item-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .ghost{
+      text-decoration:none;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.03);
+      font-size:.9rem;
+      transition:.25s ease;
+    }
+    .ghost:hover{
+      border-color:rgba(255,211,125,.2);
+      background:rgba(255,211,125,.07);
+    }
+    .vault{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .vault-visual{
+      min-height:500px;
+      position:relative;
+      overflow:hidden;
+      padding:18px;
+    }
+    .vault-visual::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.12), rgba(8,10,18,.92)),
+        url('assets/antverse/bmjewels/collection_banner.jpg') center/cover no-repeat;
+      opacity:.85;
+    }
+    .vault-core{
+      position:absolute;
+      inset:78px;
+      border-radius:30px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(8,10,18,.46);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:inset 0 0 50px rgba(140,232,255,.05);
+    }
+    .vault-core img{
+      width:min(100%, 360px);
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border-radius:50%;
+      border:12px solid rgba(255,255,255,.06);
+    }
+    .vault-copy{
+      padding:28px;
+    }
+    .vault-copy h3{
+      margin:0 0 12px;
+      font-size:1.45rem;
+    }
+    .vault-copy p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+    footer{
+      padding-top:0;
+      padding-bottom:46px;
+    }
+    .footer-card{
+      padding:24px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .footer-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.72;
+      max-width:760px;
+    }
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .footer-links a{
+      text-decoration:none;
+      color:#e7edff;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    [data-reveal]{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+    [data-reveal].visible{
+      opacity:1;
+      transform:none;
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-14px)}
+    }
+    @keyframes spin{
+      from{transform:rotate(0deg)}
+      to{transform:rotate(360deg)}
+    }
+    @media (max-width:1120px){
+      .hero,.intro-grid,.vault,.section-head{grid-template-columns:1fr}
+      .stats,.items-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-note{flex-direction:column; align-items:flex-start}
+    }
+    @media (max-width:760px){
+      .nav-inner, section, footer{padding-left:18px; padding-right:18px}
+      .nav-links{display:none}
+      .stats,.items-grid{grid-template-columns:1fr}
+      .hero-visual{min-height:760px}
+      .hero-frame{inset:0 0 180px 0}
+      .hero-ring{inset:90px 24px 150px 24px}
+      .float-card{width:104px; height:104px}
+      .vault-core{inset:50px}
+    }
+  </style>
+</head>
+<body id="top">
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" style="text-decoration:none;color:inherit">
+        <img src="assets/antverse/bmjewels/collection_logo.png" alt="BM Jewels logo" />
+        <span>BM Jewels</span>
+      </a>
+      <div class="nav-links">
+        <a href="#collection">Collection</a>
+        <a href="#items">Items</a>
+        <a href="#vault">Vault</a>
+        <a href="index.html">BMverse Home</a>
+        <a href="antverse_one_page.html">ANTverse</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div data-reveal>
+      <div class="eyebrow">Luxury utility layer inside BMVerse</div>
+      <h1><span class="gradient">BM Jewels</span></h1>
+      <p class="lead">BM Jewels now has its own dedicated showcase page. This version treats the collection like a premium vault: high-value identity objects, character-linked activation pieces, and a rarer visual language than the broader ANTverse marketplace.</p>
+      <p class="lead alt">The hero is built around the actual BM Jewels collection and the Dignity Ring item you provided. It uses the BM Jewels collection banner, live collection items, and the item-level metaverse logic already visible in OpenSea.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open BM Jewels on OpenSea</a>
+        <a class="btn secondary" href="index.html">Back to BMverse home</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" data-reveal>
+      <div class="hero-frame">
+        <div class="hero-ring">
+          <img src="assets/antverse/bmjewels/dignity_ring.jpg" alt="Dignity Ring" />
+        </div>
+        <div class="float-card f1"><img src="assets/antverse/bmjewels/stone_of_god_ring.jpg" alt="Stone of God Ring" /></div>
+        <div class="float-card f2"><img src="assets/antverse/bmjewels/light_pronoun_ring.jpg" alt="Light Pronoun Ring" /></div>
+        <div class="float-card f3"><img src="assets/antverse/bmjewels/realities_for_truth.jpg" alt="Realities for Truth" /></div>
+        <div class="hero-note">
+          <div>
+            <strong>Dignity Ring</strong>
+            <span>Featured as the lead jewel of the page, combining rarity, magical ability framing, and a premium artifact feel.</span>
+          </div>
+          <div class="pill">Epic / Magical ability</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="collection">
+    <div class="section-head" data-reveal>
+      <h2>Collection profile</h2>
+      <p>BM Jewels appears as a compact six-item collection on Ethereum, which gives it a very different weight from a broad-profile NFT drop. The page leans into that rarity by presenting BM Jewels as a premium sub-collection and ability vault rather than a conventional product grid.</p>
+    </div>
+    <div class="stats">
+      <div class="stat card" data-reveal><span>Collection</span><strong>BM Jewels</strong></div>
+      <div class="stat card" data-reveal><span>Chain</span><strong>Ethereum / ERC-1155</strong></div>
+      <div class="stat card" data-reveal><span>Scale</span><strong>6 unique jewel items</strong></div>
+      <div class="stat card" data-reveal><span>Featured trait</span><strong>Metaverse: Magical ability</strong></div>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-copy card" data-reveal>
+        <p>The strongest way to position BM Jewels is not as a side catalog, but as a more exclusive layer inside BMVerse. It sits naturally between collectible identity, premium craftsmanship, and metaverse utility.</p>
+        <p>Dignity Ring shows how jewelry traits can be framed as activation logic: a jewel is not only ornamental, but an object with symbolic and system-level value inside the world.</p>
+        <div class="tag-row">
+          <span class="tag">Luxury collectible</span>
+          <span class="tag">Metaverse utility</span>
+          <span class="tag">Rarity-driven design</span>
+          <span class="tag">Character enhancement</span>
+        </div>
+      </div>
+      <div class="trait-panel card" data-reveal>
+        <p><strong>Dignity Ring</strong> is the reference item for this page. OpenSea shows it with traits including <strong>Greatnes &amp; Power: ZUX</strong>, <strong>dominance of creatures: ZUI</strong>, <strong>gemstone: Sunrise Ruby</strong>, <strong>metaverse: Magical ability</strong>, and <strong>rarity: Epic</strong>.</p>
+        <p>Those traits are ideal for a premium landing page because they read like worldbuilding metadata, not just collectible tags. That creates stronger narrative depth and better product positioning.</p>
+        <div class="tag-row">
+          <span class="tag">ZUX</span>
+          <span class="tag">ZUI</span>
+          <span class="tag">Sunrise Ruby</span>
+          <span class="tag">Epic</span>
+          <span class="tag">Magical ability</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="items">
+    <div class="section-head" data-reveal>
+      <h2>Jewel items</h2>
+      <p>Each item below is treated as part of a premium vault, with direct OpenSea links and a distinct presentation. Where no media was captured directly, the page uses a luxury placeholder treatment so the set still feels complete.</p>
+    </div>
+    <div class="items-grid">
+      <article class="item-card card" id="dignity-ring" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/dignity_ring.jpg" alt="Dignity Ring" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Dignity Ring</strong><span>#1</span></div>
+          <p>The flagship BM Jewel on this page, used as the lead luxury object and the clearest bridge between rare jewelry and metaverse ability framing.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/94780497993465599050485820079768614914578089821675988125085530589339318222849" target="_blank" rel="noreferrer">Open item</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="stone-of-god-ring" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/stone_of_god_ring.jpg" alt="Stone of God Ring" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Stone of God Ring</strong><span>#2</span></div>
+          <p>A strong secondary hero object for the collection. Its visual profile works well as a supporting jewel in the landing and vault layouts.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open collection</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="realities-for-truth" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/realities_for_truth.jpg" alt="Realities for Truth" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Realities for Truth</strong><span>#3</span></div>
+          <p>Useful as a more abstract, mysterious jewel in the set. It gives the collection a stronger symbolic dimension beyond pure ornament.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/94780497993465599050485820079768614914578089821675988125085530592637853106177" target="_blank" rel="noreferrer">Open item</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="origin-ring" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/origin_ring.jpg" alt="Origin Ring" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Origin Ring</strong><span>#4</span></div>
+          <p>Presented as one branch of the fourth position in the set, where ring identity can be treated as an activation lineage or class family.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open collection</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="unequal-ring" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/unequal_ring.jpg" alt="Unequal Ring" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Unequal Ring</strong><span>#4</span></div>
+          <p>A contrasting ring form that helps the page show the collection as a curated jewel taxonomy rather than a single repeated motif.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open collection</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="blue-love-necklaces" data-reveal>
+        <div class="item-media placeholder" aria-label="BLUE LOVE Necklaces luxury placeholder"></div>
+        <div class="item-body">
+          <div class="item-top"><strong>BLUE LOVE Necklaces</strong><span>#5</span></div>
+          <p>Included as the necklace form inside the BM Jewels set. The page uses a bespoke luxury placeholder treatment here to keep the full set visually represented.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/94780497993465599050485820079768614914578089821675988125085530635518806589441" target="_blank" rel="noreferrer">Open item</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item-card card" id="light-pronoun-ring" data-reveal>
+        <div class="item-media"><img src="assets/antverse/bmjewels/light_pronoun_ring.jpg" alt="Light Pronoun Ring" /></div>
+        <div class="item-body">
+          <div class="item-top"><strong>Light Pronoun Ring</strong><span>#6</span></div>
+          <p>One of the most elegant supporting pieces for a luxury showcase. It works particularly well as a floating accent in hero or vault compositions.</p>
+          <div class="item-links">
+            <a class="ghost" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open collection</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="vault">
+    <div class="section-head" data-reveal>
+      <h2>Luxury vault direction</h2>
+      <p>This page does more than list BM Jewels. It defines a visual direction for how BM Jewels can live as a premium branch of BMVerse and ANTverse, with stronger hierarchy, better rarity signaling, and deeper utility storytelling.</p>
+    </div>
+    <div class="vault">
+      <div class="vault-visual card" data-reveal>
+        <div class="vault-core">
+          <img src="assets/antverse/bmjewels/dignity_ring.jpg" alt="Dignity Ring vault view" />
+        </div>
+      </div>
+      <div class="vault-copy card" data-reveal>
+        <h3>How to use this page</h3>
+        <p>This page can act as a stand-alone premium destination for BM Jewels, or as a module inside a larger BMVerse site. It is especially useful when you want jewelry to feel more exclusive than the standard collection grid.</p>
+        <p>It can also become the destination linked from BM Jewel cards on the ANTverse landing page, collection pages, character ability pages, or utility/activation modules.</p>
+        <div class="tag-row">
+          <span class="tag">Dedicated luxury branch</span>
+          <span class="tag">Utility storytelling</span>
+          <span class="tag">Premium identity objects</span>
+          <span class="tag">Metaverse activation</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="index.html">Back to BMverse home</a>
+          <a class="btn secondary" href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">Open BM Jewels collection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-card card" data-reveal>
+      <p>BM Jewels dedicated page built from the BM Jewels collection references you provided, with local jewel assets, a luxury hero, a full six-item showcase, and direct navigation back into the ANTverse landing page.</p>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="index.html">BMverse homepage</a>
+        <a href="antverse_one_page.html">ANTverse landing page</a>
+        <a href="https://opensea.io/zh-CN/collection/bm-jewels/activity?search[stringTraits][0][name]=metaverse&search[stringTraits][0][values][0]=Magical+ability&search[sortAscending]=true&search[sortBy]=UNIT_PRICE&tab=items" target="_blank" rel="noreferrer">OpenSea collection</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.15});
+    document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

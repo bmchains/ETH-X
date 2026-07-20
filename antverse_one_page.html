@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANTverse One Page</title>
+  <style>
+    :root{
+      --bg:#04050b;
+      --bg-2:#090d1d;
+      --panel:rgba(10,14,26,.7);
+      --panel-strong:rgba(8,10,18,.9);
+      --line:rgba(255,255,255,.1);
+      --line-strong:rgba(255,255,255,.18);
+      --text:#f4f7ff;
+      --muted:#9da8c0;
+      --muted-2:#6f7a95;
+      --cyan:#8ce8ff;
+      --blue:#5d7cff;
+      --pink:#ff53ac;
+      --gold:#ffbe5c;
+      --green:#44f6bb;
+      --purple:#8f6dff;
+      --shadow:0 28px 80px rgba(0,0,0,.5);
+      --radius-xl:32px;
+      --radius-lg:24px;
+      --radius-md:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(68,246,187,.11), transparent 22%),
+        radial-gradient(circle at 84% 10%, rgba(93,124,255,.14), transparent 26%),
+        radial-gradient(circle at 50% 48%, rgba(255,83,172,.08), transparent 28%),
+        linear-gradient(180deg,#05060c 0%, #070915 44%, #04050b 100%);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:-10%;
+      pointer-events:none;
+      z-index:0;
+    }
+    body::before{
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.6), transparent 88%);
+    }
+    body::after{
+      background:
+        radial-gradient(circle at 30% 30%, rgba(140,232,255,.08), transparent 18%),
+        radial-gradient(circle at 78% 22%, rgba(255,83,172,.09), transparent 16%),
+        radial-gradient(circle at 65% 70%, rgba(255,190,92,.06), transparent 14%);
+      filter:blur(50px);
+      animation:drift 16s ease-in-out infinite alternate;
+      opacity:.9;
+    }
+    .cursor-glow{
+      position:fixed;
+      width:420px;
+      height:420px;
+      left:0;
+      top:0;
+      transform:translate(-50%, -50%);
+      border-radius:50%;
+      pointer-events:none;
+      background:radial-gradient(circle, rgba(99,161,255,.18), rgba(99,161,255,.05) 34%, transparent 68%);
+      filter:blur(18px);
+      z-index:0;
+      transition:transform .08s linear;
+    }
+    .shell{position:relative; z-index:1}
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(18px);
+      background:rgba(3,5,12,.56);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      max-width:1320px;
+      margin:0 auto;
+      padding:16px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      letter-spacing:.3em;
+      text-transform:uppercase;
+      font-size:.8rem;
+      min-width:max-content;
+    }
+    .brand img{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      box-shadow:0 0 26px rgba(93,124,255,.28);
+    }
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:14px;
+    }
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:.94rem;
+      transition:.25s ease;
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .nav-links a:hover{
+      color:var(--text);
+      background:rgba(255,255,255,.04);
+    }
+    section{
+      max-width:1320px;
+      margin:0 auto;
+      padding:84px 28px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border:1px solid rgba(140,232,255,.18);
+      border-radius:999px;
+      background:rgba(12,17,34,.52);
+      color:var(--cyan);
+      font-size:.86rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .hero{
+      min-height:calc(100vh - 76px);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:42px;
+      align-items:center;
+      padding-top:56px;
+    }
+    .hero h1{
+      margin:18px 0 16px;
+      font-size:clamp(4rem,9vw,8rem);
+      line-height:.92;
+      letter-spacing:-.06em;
+    }
+    .gradient{
+      background:linear-gradient(120deg,#ffffff 12%, #98f3ff 34%, #8ea6ff 58%, #ff77cb 88%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 0 32px rgba(147,192,255,.18);
+    }
+    .lead{
+      max-width:700px;
+      color:#d9e0ee;
+      font-size:1.12rem;
+      line-height:1.82;
+      margin:0 0 12px;
+    }
+    .lead.alt{color:var(--muted)}
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin:28px 0 34px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 20px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:700;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{
+      color:#08111d;
+      background:linear-gradient(135deg, var(--cyan), #9daeff 55%, #ffc5e6);
+      box-shadow:0 18px 46px rgba(120,164,255,.28);
+    }
+    .btn.secondary{
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+    }
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+      margin-top:16px;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius-lg);
+    }
+    .metric{
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .metric::before{
+      content:"";
+      position:absolute;
+      inset:auto -10% -50% auto;
+      width:160px;
+      height:160px;
+      background:radial-gradient(circle, rgba(93,124,255,.22), transparent 65%);
+      filter:blur(12px);
+    }
+    .metric strong{
+      display:block;
+      font-size:1.05rem;
+      margin-bottom:8px;
+      position:relative;
+      z-index:1;
+    }
+    .metric span{
+      color:var(--muted);
+      line-height:1.58;
+      font-size:.95rem;
+      position:relative;
+      z-index:1;
+    }
+    .visual-wrap{
+      position:relative;
+      min-height:820px;
+      perspective:1200px;
+    }
+    .hero-panel{
+      position:absolute;
+      inset:0 90px 120px 0;
+      overflow:hidden;
+      border-radius:36px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(160deg, rgba(5,6,12,.08), rgba(5,6,12,.58)),
+        url('assets/antverse/whitepaper_page_1.png') center/cover no-repeat;
+      transform-style:preserve-3d;
+    }
+    .hero-panel::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:conic-gradient(from 180deg, rgba(140,232,255,.06), transparent, rgba(255,83,172,.07), transparent, rgba(255,190,92,.05), transparent);
+      animation:spin 20s linear infinite;
+      mix-blend-mode:screen;
+    }
+    .hero-panel::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:42%;
+      background:linear-gradient(180deg, transparent, rgba(3,4,8,.9));
+    }
+    .hero-badge{
+      position:absolute;
+      left:32px;
+      bottom:28px;
+      z-index:2;
+      max-width:340px;
+      padding:18px 20px;
+      border-radius:22px;
+      background:rgba(8,11,24,.78);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(12px);
+    }
+    .hero-badge strong{display:block; margin-bottom:8px}
+    .hero-badge p{margin:0; color:var(--muted); line-height:1.58}
+    .floating-card{
+      position:absolute;
+      width:212px;
+      overflow:hidden;
+      border-radius:24px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:0 24px 50px rgba(0,0,0,.46);
+      backdrop-filter:blur(10px);
+      animation:float 7s ease-in-out infinite;
+    }
+    .floating-card img{
+      display:block;
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+    }
+    .floating-card span{
+      display:block;
+      padding:12px 14px 16px;
+      font-size:.9rem;
+      color:#d7dced;
+    }
+    .card-a{top:64px; right:0}
+    .card-b{top:300px; right:170px; animation-delay:-2s}
+    .card-c{bottom:72px; right:22px; animation-delay:-4s}
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:24px;
+      margin-bottom:28px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:clamp(2rem,4vw,3.5rem);
+      letter-spacing:-.04em;
+    }
+    .section-head p{
+      margin:0;
+      max-width:660px;
+      color:var(--muted);
+      line-height:1.72;
+    }
+    .quote-band{
+      display:grid;
+      grid-template-columns:.84fr 1.16fr;
+      gap:24px;
+      align-items:stretch;
+    }
+    .quote-card,.image-card,.story-card,.feature,.stack-card,.manifesto,.market-shell,.filter-panel,.top-collection,.asset-card,.jewel-card,.social-card,.footer-mega,.footer-panel{
+      border-radius:var(--radius-lg);
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .quote-card{
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .quote-card blockquote{
+      margin:0;
+      font-size:1.5rem;
+      line-height:1.45;
+      letter-spacing:-.02em;
+    }
+    .quote-card small{
+      color:var(--muted);
+      margin-top:18px;
+      display:block;
+      line-height:1.68;
+    }
+    .image-card{overflow:hidden; padding:14px}
+    .image-card img{width:100%; display:block; border-radius:22px}
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:24px;
+    }
+    .tag{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#d9e7ff;
+      font-size:.88rem;
+    }
+    .story-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-top:24px;
+    }
+    .story-card{
+      padding:24px;
+      transition:transform .3s ease, border-color .3s ease;
+    }
+    .story-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(140,232,255,.2);
+    }
+    .story-card h3{margin:0 0 12px; font-size:1.14rem}
+    .story-card p{margin:0; color:var(--muted); line-height:1.68}
+    .stack{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:start;
+    }
+    .features{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+    .feature{padding:24px}
+    .feature .accent{
+      display:inline-flex;
+      margin-bottom:16px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      color:var(--cyan);
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .feature h3{margin:0 0 10px; font-size:1.12rem}
+    .feature p{margin:0; color:var(--muted); line-height:1.68}
+    .stack-card{
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .stack-card img{width:100%; border-radius:22px; display:block}
+    .market-layout{
+      display:grid;
+      grid-template-columns:300px 1fr;
+      gap:22px;
+      align-items:start;
+    }
+    .filter-panel{
+      padding:20px;
+      position:sticky;
+      top:92px;
+      background:
+        linear-gradient(180deg, rgba(8,12,24,.92), rgba(8,10,20,.76)),
+        radial-gradient(circle at top right, rgba(93,124,255,.12), transparent 28%);
+    }
+    .filter-panel h3{
+      margin:0 0 16px;
+      font-size:1.02rem;
+      letter-spacing:.02em;
+    }
+    .filter-group{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:16px;
+      margin-top:16px;
+    }
+    .filter-group strong{
+      display:block;
+      margin-bottom:12px;
+      font-size:.9rem;
+      color:#dfe7fb;
+    }
+    .chip-set{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .chip{
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      font-size:.86rem;
+    }
+    .market-shell{
+      padding:18px;
+      background:
+        linear-gradient(180deg, rgba(10,14,26,.84), rgba(7,10,18,.82)),
+        radial-gradient(circle at 90% 10%, rgba(255,83,172,.08), transparent 24%);
+    }
+    .market-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding:8px 4px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      margin-bottom:18px;
+    }
+    .market-top h3{
+      margin:0 0 6px;
+      font-size:1.32rem;
+    }
+    .market-top p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.66;
+      max-width:720px;
+    }
+    .market-stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      min-width:360px;
+    }
+    .mini-stat{
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      text-align:left;
+    }
+    .mini-stat span{
+      display:block;
+      color:var(--muted-2);
+      font-size:.8rem;
+      margin-bottom:6px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .mini-stat strong{
+      font-size:1.05rem;
+      color:#eef2ff;
+    }
+    .toggle-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+    }
+    .toggle{
+      border:none;
+      cursor:pointer;
+      padding:11px 14px;
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      font:inherit;
+      transition:.25s ease;
+    }
+    .toggle.active,
+    .toggle:hover{
+      color:var(--text);
+      border-color:rgba(140,232,255,.22);
+      background:rgba(140,232,255,.08);
+    }
+    .view{display:none}
+    .view.active{display:block}
+    .asset-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .asset-card{
+      overflow:hidden;
+      transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+      transform-style:preserve-3d;
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(13,16,30,.9), rgba(8,10,16,.92));
+    }
+    .asset-card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(140,232,255,.24);
+      box-shadow:0 32px 80px rgba(0,0,0,.56);
+    }
+    .asset-media{
+      position:relative;
+      aspect-ratio:1/1;
+      overflow:hidden;
+    }
+    .asset-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .7s ease;
+    }
+    .asset-card:hover .asset-media img{transform:scale(1.06)}
+    .asset-badge{
+      position:absolute;
+      top:14px;
+      left:14px;
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      background:rgba(6,9,20,.74);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+    }
+    .asset-meta{
+      padding:16px;
+      display:grid;
+      gap:12px;
+    }
+    .asset-title{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:start;
+    }
+    .asset-title strong{
+      font-size:1.02rem;
+      line-height:1.34;
+    }
+    .asset-title span{
+      color:var(--muted-2);
+      font-size:.78rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .asset-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .asset-tags em{
+      font-style:normal;
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      color:#dce6ff;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .asset-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .ghost-link{
+      color:var(--text);
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.03);
+      font-size:.9rem;
+      transition:.25s ease;
+    }
+    .ghost-link:hover{
+      background:rgba(255,255,255,.06);
+      border-color:rgba(140,232,255,.22);
+    }
+    .collection-layout{
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      gap:18px;
+      align-items:start;
+    }
+    .top-collection{
+      padding:18px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(11,14,26,.86), rgba(9,11,18,.92)),
+        radial-gradient(circle at top right, rgba(93,124,255,.16), transparent 26%);
+    }
+    .top-collection img{
+      width:100%;
+      border-radius:22px;
+      display:block;
+      margin-bottom:16px;
+    }
+    .top-collection h3{
+      margin:0 0 10px;
+      font-size:1.5rem;
+    }
+    .top-collection p{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.72;
+    }
+    .collection-panels{
+      display:grid;
+      gap:16px;
+    }
+    .social-card,
+    .jewel-card{
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .jewel-card{
+      min-height:100%;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,190,92,.12), transparent 24%),
+        radial-gradient(circle at 80% 80%, rgba(93,124,255,.12), transparent 22%),
+        linear-gradient(180deg, rgba(13,14,28,.94), rgba(8,10,16,.94));
+    }
+    .jewel-showcase{
+      display:grid;
+      grid-template-columns:.88fr 1.12fr;
+      gap:22px;
+      align-items:stretch;
+      position:relative;
+      z-index:1;
+    }
+    .jewel-hero-media{
+      position:relative;
+      overflow:hidden;
+      min-height:620px;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(5,8,18,.18), rgba(5,8,18,.92)),
+        url('assets/antverse/bmjewels/collection_banner.jpg') center/cover no-repeat;
+      box-shadow:0 24px 60px rgba(0,0,0,.42);
+    }
+    .jewel-hero-media::before{
+      content:"";
+      position:absolute;
+      inset:-18%;
+      background:conic-gradient(from 180deg, rgba(255,190,92,.16), transparent, rgba(140,232,255,.12), transparent, rgba(255,83,172,.12), transparent, rgba(255,190,92,.16));
+      animation:spin 18s linear infinite;
+      opacity:.8;
+      mix-blend-mode:screen;
+    }
+    .jewel-hero-media::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:44%;
+      background:linear-gradient(180deg, transparent, rgba(4,6,12,.95));
+    }
+    .jewel-main-image{
+      position:absolute;
+      inset:86px 42px 120px 42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+      border-radius:30px;
+      background:rgba(7,10,18,.42);
+      border:1px solid rgba(255,255,255,.07);
+      backdrop-filter:blur(10px);
+      box-shadow:inset 0 0 50px rgba(140,232,255,.06);
+    }
+    .jewel-main-image img{
+      width:min(100%, 420px);
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border-radius:50%;
+      border:10px solid rgba(255,255,255,.06);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 50px rgba(255,190,92,.18),
+        0 0 110px rgba(140,232,255,.1);
+    }
+    .jewel-float{
+      position:absolute;
+      border-radius:22px;
+      overflow:hidden;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
+      z-index:3;
+      backdrop-filter:blur(10px);
+      animation:float 8s ease-in-out infinite;
+    }
+    .jewel-float img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .jewel-float.one{
+      width:112px;
+      height:112px;
+      top:34px;
+      right:28px;
+    }
+    .jewel-float.two{
+      width:124px;
+      height:124px;
+      left:26px;
+      bottom:32px;
+      animation-delay:-3s;
+    }
+    .jewel-float.three{
+      width:100px;
+      height:100px;
+      right:26px;
+      bottom:54px;
+      animation-delay:-5s;
+    }
+    .jewel-caption{
+      position:absolute;
+      left:26px;
+      right:26px;
+      bottom:24px;
+      z-index:4;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:end;
+    }
+    .jewel-caption strong{
+      display:block;
+      font-size:1.2rem;
+      margin-bottom:6px;
+    }
+    .jewel-caption span{
+      color:var(--muted);
+      line-height:1.58;
+      max-width:420px;
+    }
+    .jewel-chip{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#f0f4ff;
+      font-size:.84rem;
+      white-space:nowrap;
+    }
+    .jewel-card::before{
+      content:"";
+      position:absolute;
+      right:-60px;
+      top:-40px;
+      width:220px;
+      height:220px;
+      background:conic-gradient(from 210deg, rgba(255,190,92,.55), rgba(140,232,255,.5), rgba(255,83,172,.55), rgba(255,190,92,.55));
+      clip-path:polygon(50% 0%, 100% 40%, 82% 100%, 18% 100%, 0% 40%);
+      filter:blur(10px);
+      opacity:.24;
+      animation:float 9s ease-in-out infinite;
+    }
+    .jewel-orb{
+      width:118px;
+      height:118px;
+      border-radius:28px;
+      margin-bottom:18px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), transparent 18%),
+        conic-gradient(from 200deg, #ffd77a, #ff6bb8, #6a8fff, #8cffeb, #ffd77a);
+      box-shadow:
+        inset 0 0 26px rgba(255,255,255,.28),
+        0 20px 50px rgba(255,190,92,.18);
+      clip-path:polygon(50% 0%, 100% 38%, 84% 100%, 16% 100%, 0% 38%);
+    }
+    .jewel-card h3,
+    .social-card h3{
+      margin:0 0 12px;
+      font-size:1.28rem;
+    }
+    .jewel-card p,
+    .social-card p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.72;
+      position:relative;
+      z-index:1;
+    }
+    .social-links{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .social-links a{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:88px;
+      padding:14px 10px;
+      border-radius:18px;
+      text-decoration:none;
+      color:#dfe7fb;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      transition:transform .28s ease, border-color .28s ease, background .28s ease;
+    }
+    .social-links a:hover{
+      transform:translateY(-4px);
+      border-color:rgba(140,232,255,.22);
+      background:rgba(140,232,255,.06);
+    }
+    .social-links svg{
+      width:22px;
+      height:22px;
+      fill:currentColor;
+    }
+    .social-links span{
+      font-size:.82rem;
+      text-align:center;
+      line-height:1.25;
+    }
+    .jewel-stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin:18px 0;
+      position:relative;
+      z-index:1;
+    }
+    .jewel-stat{
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .jewel-stat span{
+      display:block;
+      color:var(--muted-2);
+      font-size:.76rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      margin-bottom:7px;
+    }
+    .jewel-stat strong{
+      font-size:1rem;
+      line-height:1.4;
+      color:#edf3ff;
+    }
+    .jewel-list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:18px;
+      position:relative;
+      z-index:1;
+    }
+    .jewel-list a{
+      text-decoration:none;
+      color:#e8eeff;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      transition:.25s ease;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+    .jewel-list a:hover{
+      transform:translateY(-3px);
+      border-color:rgba(140,232,255,.22);
+      background:rgba(140,232,255,.06);
+    }
+    .jewel-list small{
+      color:var(--muted);
+      font-size:.8rem;
+    }
+    .jewel-copy-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+      position:relative;
+      z-index:1;
+    }
+    .manifesto{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      padding:18px;
+      overflow:hidden;
+      background:
+        linear-gradient(135deg, rgba(5,7,16,.92), rgba(9,12,24,.76)),
+        radial-gradient(circle at 85% 15%, rgba(255,83,172,.13), transparent 24%);
+    }
+    .manifesto-copy{padding:18px 16px 18px 14px}
+    .manifesto-copy h2{
+      margin:0 0 16px;
+      font-size:clamp(2rem,4vw,3.2rem);
+    }
+    .manifesto-copy p{
+      color:#d6ddeb;
+      line-height:1.8;
+      margin:0 0 16px;
+    }
+    .manifesto-copy .small{color:var(--muted)}
+    .manifesto-visual{
+      position:relative;
+      min-height:540px;
+      border-radius:24px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .manifesto-visual .base{
+      position:absolute;
+      inset:0;
+      background:url('assets/antverse/whitepaper_page_3.png') center/cover no-repeat;
+      opacity:.84;
+      transform:scale(1.06);
+    }
+    .manifesto-visual .overlay{
+      position:absolute;
+      inset:20px 20px auto auto;
+      width:48%;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 18px 45px rgba(0,0,0,.34);
+    }
+    .manifesto-visual .overlay img{width:100%; display:block}
+    .manifesto-visual .logo{
+      position:absolute;
+      left:28px;
+      bottom:28px;
+      width:124px;
+      aspect-ratio:1;
+      border-radius:28px;
+      padding:14px;
+      background:rgba(8,10,20,.8);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .manifesto-visual .logo img{width:100%; height:100%; object-fit:contain}
+    footer{
+      max-width:1320px;
+      margin:0 auto;
+      padding:0 28px 52px;
+    }
+    .footer-mega{
+      padding:24px;
+      background:
+        linear-gradient(180deg, rgba(9,11,20,.92), rgba(6,7,13,.98)),
+        radial-gradient(circle at 10% 10%, rgba(140,232,255,.09), transparent 18%),
+        radial-gradient(circle at 90% 90%, rgba(255,83,172,.1), transparent 18%);
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .footer-panel{
+      padding:20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+    }
+    .footer-panel h3{
+      margin:0 0 10px;
+      font-size:1.2rem;
+    }
+    .footer-panel p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.72;
+    }
+    .footer-inline{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+    }
+    .footer-inline a{
+      color:#dfe8ff;
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .footer-bottom{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      color:var(--muted-2);
+      font-size:.92rem;
+      flex-wrap:wrap;
+    }
+    [data-reveal]{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+    [data-reveal].visible{
+      opacity:1;
+      transform:none;
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-14px)}
+    }
+    @keyframes drift{
+      0%{transform:translate3d(-2%, 0, 0) scale(1)}
+      100%{transform:translate3d(2%, 2%, 0) scale(1.04)}
+    }
+    @keyframes spin{
+      from{transform:rotate(0deg)}
+      to{transform:rotate(360deg)}
+    }
+    @media (max-width:1160px){
+      .hero,.quote-band,.stack,.manifesto,.collection-layout,.footer-grid,.jewel-showcase{grid-template-columns:1fr}
+      .metrics,.features,.story-grid{grid-template-columns:1fr}
+      .market-layout{grid-template-columns:1fr}
+      .filter-panel{position:relative; top:auto}
+      .market-stats{min-width:0}
+      .asset-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .social-links{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .visual-wrap{min-height:760px}
+      .hero-panel{inset:0 40px 130px 0}
+    }
+    @media (max-width:760px){
+      .nav-inner{padding:16px 18px}
+      .nav-links{display:none}
+      section{padding:64px 18px}
+      footer{padding:0 18px 42px}
+      .metrics,.market-stats,.asset-grid,.social-links,.jewel-stats,.jewel-list{grid-template-columns:1fr}
+      .visual-wrap{min-height:760px}
+      .hero-panel{inset:0 0 180px 0}
+      .floating-card{width:170px}
+      .card-a{top:28px}
+      .card-b{top:260px; right:116px}
+      .card-c{bottom:28px}
+      .market-top{flex-direction:column; align-items:flex-start}
+      .footer-bottom{flex-direction:column}
+    }
+  </style>
+</head>
+<body id="top">
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="shell">
+    <nav class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="index.html" style="text-decoration:none;color:inherit">
+          <img src="assets/antverse/collection/collection_logo.png" alt="ANTverse logo" />
+          <span>BMVerse / ANTverse</span>
+        </a>
+        <div class="nav-links">
+          <a href="#mutation">Mutation</a>
+          <a href="#marketplace">Marketplace</a>
+          <a href="#collection">Collection</a>
+          <a href="bm_jewels.html">BM Jewels</a>
+          <a href="#footer">Footer</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-copy" data-reveal>
+        <div class="eyebrow">Worldbuilding, collectibles, and platform energy in one page</div>
+        <h1><span class="gradient">ANTverse</span></h1>
+        <p class="lead">This upgraded concept now behaves more like a premium NFT product surface instead of a static art page. It blends the BMVerse whitepaper, the traits algorithm framework, BM Jewel positioning, and BM Mega Collection artwork into a cleaner marketplace-driven experience.</p>
+        <p class="lead alt">The visual system keeps the original BMVerse cosmic mood, but adds a stronger product layer: assets browsing, collection storytelling, BM Jewel utility framing, footer navigation, interactive hover depth, and social entry points.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#marketplace">Explore assets</a>
+          <a class="btn secondary" href="bm_jewels.html">Open BM Jewels page</a>
+        </div>
+        <div class="metrics">
+          <div class="metric card">
+            <strong>Marketplace feel</strong>
+            <span>Added an OpenSea-inspired assets experience with filter chips, section switching, collection focus cards, and item-level calls to action.</span>
+          </div>
+          <div class="metric card">
+            <strong>BM Jewel included</strong>
+            <span>The page now treats BM Jewel as a premium utility layer connected to collectible abilities instead of leaving it outside the universe story.</span>
+          </div>
+          <div class="metric card">
+            <strong>Higher motion</strong>
+            <span>Introduced animated aurora, hover lift, image zoom, cursor glow, panel shimmer, and tilt-ready cards for a more cinematic result.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-wrap" data-reveal>
+        <div class="hero-panel js-tilt">
+          <div class="hero-badge">
+            <strong>The upgraded direction</strong>
+            <p>Think of ANTverse as a hybrid of lore portal, native NFT marketplace, and collectible operating system for BMVerse.</p>
+          </div>
+        </div>
+        <div class="floating-card card-a js-tilt">
+          <img src="assets/antverse/collection/queen_fariciah.jpg" alt="Queen Fariciah" />
+          <span>Queen Fariciah</span>
+        </div>
+        <div class="floating-card card-b js-tilt">
+          <img src="assets/antverse/collection/triston.jpg" alt="Triston" />
+          <span>Triston</span>
+        </div>
+        <div class="floating-card card-c js-tilt">
+          <img src="assets/antverse/collection/renata.jpg" alt="Renata" />
+          <span>Renata</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="mutation">
+      <div class="section-head" data-reveal>
+        <h2>Mutation engine</h2>
+        <p>The framework still anchors the whole direction. Mutation, elemental construction, and fixed traits remain the main logic that differentiates ANTverse from a normal art collection.</p>
+      </div>
+      <div class="quote-band">
+        <div class="quote-card" data-reveal>
+          <div>
+            <blockquote>“The secret of mutation is the art of combining elements using the principles of physics, which brings sustainability.”</blockquote>
+            <small>That line now drives the page architecture itself. The experience positions each asset as a result of a system, not a random rarity card, which is much stronger for brand depth and future product expansion.</small>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Earth</span>
+            <span class="tag">Water</span>
+            <span class="tag">Air</span>
+            <span class="tag">Fire</span>
+            <span class="tag">Light</span>
+            <span class="tag">Shadow</span>
+            <span class="tag">Metal</span>
+            <span class="tag">Nature</span>
+          </div>
+        </div>
+        <div class="image-card" data-reveal>
+          <img src="assets/antverse/diagram_page_4.png" alt="BMVerse mutation framework" />
+        </div>
+      </div>
+      <div class="story-grid">
+        <div class="story-card" data-reveal>
+          <h3>System-first rarity</h3>
+          <p>Users should understand how power, identity, and traits relate. That gives value to categories, not just individual images.</p>
+        </div>
+        <div class="story-card" data-reveal>
+          <h3>Character continuity</h3>
+          <p>The asset page and collection page can both inherit the same mutation vocabulary, so lore and product feel synchronized.</p>
+        </div>
+        <div class="story-card" data-reveal>
+          <h3>Future-ready mechanics</h3>
+          <p>This layout leaves room for evolution into trait activations, unlocks, cards, utility layers, and richer onchain progression.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="marketplace">
+      <div class="section-head" data-reveal>
+        <h2>Assets and collection</h2>
+        <p>This section behaves more like the native marketplace layer you asked for. It mixes an asset browser, a collection focus area, and a BM Jewel utility panel in the same visual rhythm.</p>
+      </div>
+      <div class="market-layout">
+        <aside class="filter-panel" data-reveal>
+          <h3>Marketplace filters</h3>
+          <div class="filter-group">
+            <strong>Categories</strong>
+            <div class="chip-set">
+              <span class="chip">Characters</span>
+              <span class="chip">Music Identity</span>
+              <span class="chip">Potion</span>
+              <span class="chip">Elemental</span>
+              <span class="chip">Legendary</span>
+            </div>
+          </div>
+          <div class="filter-group">
+            <strong>World tags</strong>
+            <div class="chip-set">
+              <span class="chip">ANTverse</span>
+              <span class="chip">BM Mega</span>
+              <span class="chip">Mutation</span>
+              <span class="chip">Traits</span>
+              <span class="chip">Rare</span>
+            </div>
+          </div>
+          <div class="filter-group">
+            <strong>Connected modules</strong>
+            <div class="chip-set">
+              <span class="chip">BM Marketplace</span>
+              <span class="chip">BM Music</span>
+              <span class="chip">BM Jewel</span>
+              <span class="chip">BM Galaxy</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="market-shell" data-reveal>
+          <div class="market-top">
+            <div>
+              <h3>BM MEGA Collection “ANTverse” experience</h3>
+              <p>Designed to feel like a premium collection landing zone: immediate art discovery, world tags, cross-module storytelling, and clear jumps into the larger BMVerse ecosystem.</p>
+            </div>
+            <div class="market-stats">
+              <div class="mini-stat"><span>Collection</span><strong>BM Mega / ANTverse</strong></div>
+              <div class="mini-stat"><span>Format</span><strong>ERC-1155 art assets</strong></div>
+              <div class="mini-stat"><span>Positioning</span><strong>Rare identity universe</strong></div>
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <button class="toggle active" data-view-target="assets">Assets page</button>
+            <button class="toggle" data-view-target="collection">Collection page</button>
+            <button class="toggle" data-view-target="jewel">BM Jewel layer</button>
+          </div>
+
+          <div class="view active" id="view-assets">
+            <div class="asset-grid">
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/dotx_universe_hand.jpg" alt="DOT-X Universe Hand" />
+                  <div class="asset-badge">Elemental Artifact</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>DOT-X Universe Hand</strong><span>Asset</span></div>
+                  <div class="asset-tags"><em>ANTverse</em><em>DOT-X</em><em>Artifact</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">View on OpenSea</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/queen_berenice.jpg" alt="Queen Berenice" />
+                  <div class="asset-badge">Character</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>Queen Berenice</strong><span>Identity</span></div>
+                  <div class="asset-tags"><em>Queen</em><em>Rare</em><em>BM Mega</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open asset</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/magical_potion.jpg" alt="Magical Potion" />
+                  <div class="asset-badge">Potion Utility</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>Candle of Magic Speech</strong><span>Potion</span></div>
+                  <div class="asset-tags"><em>Upgrade</em><em>Magic</em><em>Trait path</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open asset</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/bloody_war.jpg" alt="Bloody War" />
+                  <div class="asset-badge">Conflict Scene</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>DOT-X Bloody War</strong><span>Scene</span></div>
+                  <div class="asset-tags"><em>Dark arc</em><em>Visual lore</em><em>Epic</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open asset</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/music_renata.jpg" alt="Music of Renata Identity" />
+                  <div class="asset-badge">Music Identity</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>Music of “Renata” Identity</strong><span>Music</span></div>
+                  <div class="asset-tags"><em>BM Music</em><em>Character sound</em><em>Identity</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open asset</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="asset-card js-tilt" data-reveal>
+                <div class="asset-media">
+                  <img src="assets/antverse/collection/queen_fariciah.jpg" alt="Queen Fariciah" />
+                  <div class="asset-badge">Trait-driven Queen</div>
+                </div>
+                <div class="asset-meta">
+                  <div class="asset-title"><strong>Queen Fariciah</strong><span>Character</span></div>
+                  <div class="asset-tags"><em>Consciousness</em><em>Emotion</em><em>ANTverse</em></div>
+                  <div class="asset-actions">
+                    <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open asset</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="view" id="view-collection">
+            <div class="collection-layout">
+              <div class="top-collection card" id="collection">
+                <img src="assets/antverse/whitepaper_page_2.png" alt="BMVerse whitepaper collection structure" />
+                <h3>Collection page direction</h3>
+                <p>Instead of showing only item thumbnails, the collection view should carry the BMVerse narrative: world modules, lore hierarchy, mutation-based meaning, and cross-links into BM Marketplace, BM Music, BM Galaxy, and BM Jewel.</p>
+                <div class="asset-actions">
+                  <a class="ghost-link" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open collection</a>
+                  <a class="ghost-link" href="bm_jewels.html">Open BM Jewels</a>
+                </div>
+              </div>
+              <div class="collection-panels">
+                <div class="social-card card">
+                  <h3>Collection storytelling layers</h3>
+                  <p>Use top-level collection stats, then immediately show categories like characters, music identities, potions, and artifacts. Below that, surface trait logic and special modules so the collection feels curated rather than flat.</p>
+                  <div class="tag-row">
+                    <span class="tag">Hero collection banner</span>
+                    <span class="tag">Curated categories</span>
+                    <span class="tag">Trait map</span>
+                    <span class="tag">Lore copy</span>
+                  </div>
+                </div>
+                <div class="social-card card">
+                  <h3>Why this feels stronger</h3>
+                  <p>The BMVerse PDFs already suggest a broader universe. This collection view makes that visible by turning ANTverse into a gateway product instead of an isolated image set.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view" id="view-jewel">
+            <div class="jewel-card card" id="bmjewel">
+              <div class="jewel-showcase">
+                <div class="jewel-hero-media js-tilt">
+                  <div class="jewel-main-image">
+                    <img src="assets/antverse/bmjewels/dignity_ring.jpg" alt="Dignity Ring" />
+                  </div>
+                  <div class="jewel-float one"><img src="assets/antverse/bmjewels/stone_of_god_ring.jpg" alt="Stone of God Ring" /></div>
+                  <div class="jewel-float two"><img src="assets/antverse/bmjewels/realities_for_truth.jpg" alt="Realities for Truth" /></div>
+                  <div class="jewel-float three"><img src="assets/antverse/bmjewels/light_pronoun_ring.jpg" alt="Light Pronoun Ring" /></div>
+                  <div class="jewel-caption">
+                    <div>
+                      <strong>Dignity Ring</strong>
+                      <span>Luxury utility jewel positioned as a rare metaverse activation object inside the BM Jewels set.</span>
+                    </div>
+                    <div class="jewel-chip">BM Jewels / 6 items</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="jewel-orb"></div>
+                  <h3>BM Jewels collection layer</h3>
+                  <p>This BM Jewel section is now grounded in the actual collection data you provided. The highlighted item is <strong>Dignity Ring</strong>, and its OpenSea traits connect jewelry identity to metaverse utility through <strong>Magical ability</strong>, <strong>Epic</strong> rarity, and gemstone-driven character value.</p>
+                  <p>The BM Jewels collection reads as a compact six-item premium set, which makes it ideal for a more luxurious presentation inside ANTverse: less like a mass marketplace, more like a rare activation vault.</p>
+                  <div class="jewel-stats">
+                    <div class="jewel-stat">
+                      <span>Featured jewel</span>
+                      <strong>Dignity Ring</strong>
+                    </div>
+                    <div class="jewel-stat">
+                      <span>Metaverse trait</span>
+                      <strong>Magical ability</strong>
+                    </div>
+                    <div class="jewel-stat">
+                      <span>Rarity</span>
+                      <strong>Epic</strong>
+                    </div>
+                  </div>
+                  <div class="tag-row">
+                    <span class="tag">Physical + digital value</span>
+                    <span class="tag">Ability activation</span>
+                    <span class="tag">Premium collectible tier</span>
+                    <span class="tag">Character enhancement</span>
+                    <span class="tag">Sunrise Ruby</span>
+                    <span class="tag">ZUX / ZUI</span>
+                  </div>
+                  <div class="jewel-copy-actions">
+                    <a class="btn primary" href="bm_jewels.html">Open BM Jewels page</a>
+                    <a class="btn secondary" href="https://opensea.io/zh-CN/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/94780497993465599050485820079768614914578089821675988125085530589339318222849" target="_blank" rel="noreferrer">Open Dignity Ring</a>
+                  </div>
+                  <div class="jewel-list">
+                    <a href="bm_jewels.html#dignity-ring">
+                      <span>Dignity Ring</span>
+                      <small>#1</small>
+                    </a>
+                    <a href="bm_jewels.html#stone-of-god-ring">
+                      <span>Stone of God Ring</span>
+                      <small>#2</small>
+                    </a>
+                    <a href="bm_jewels.html#realities-for-truth">
+                      <span>Realities for Truth</span>
+                      <small>#3</small>
+                    </a>
+                    <a href="bm_jewels.html#origin-ring">
+                      <span>Origin Ring / Unequal Ring</span>
+                      <small>#4</small>
+                    </a>
+                    <a href="bm_jewels.html#blue-love-necklaces">
+                      <span>BLUE LOVE Necklaces</span>
+                      <small>#5</small>
+                    </a>
+                    <a href="bm_jewels.html#light-pronoun-ring">
+                      <span>Light Pronoun Ring</span>
+                      <small>#6</small>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="section-head" data-reveal>
+        <h2>Universe stack</h2>
+        <p>The wider ecosystem is now framed more clearly, including the missing BM Jewel layer. That helps ANTverse feel native to BMVerse instead of visually detached from the rest of the platform story.</p>
+      </div>
+      <div class="stack">
+        <div class="features">
+          <div class="feature" data-reveal>
+            <span class="accent">World layer</span>
+            <h3>BM Galaxy</h3>
+            <p>Spatial storytelling, worlds, zones, and faction-based exploration that expand ANTverse beyond a single drop surface.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="accent">Core layer</span>
+            <h3>BM Mega / ANTverse</h3>
+            <p>The premium collectible identity zone where characters, trait logic, visual narratives, and story arcs converge.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="accent">Commerce</span>
+            <h3>BM Marketplace</h3>
+            <p>The native browsing, discovery, and trading layer that should feel curated, modular, and deeply tied to lore.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="accent">Sound</span>
+            <h3>BM Music</h3>
+            <p>Identity-linked music assets can give characters a stronger aura and expand the emotional range of the brand.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="accent">Premium utility</span>
+            <h3>BM Jewel</h3>
+            <p>A higher-value collectible layer that can connect physical artistic craft, rarity, and feature activation for selected identities.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="accent">Knowledge</span>
+            <h3>BM Learn</h3>
+            <p>The module that explains why traits exist, how the universe works, and how users move from curiosity into mastery.</p>
+          </div>
+        </div>
+        <div class="stack-card" data-reveal>
+          <img src="assets/antverse/diagram_page_3.png" alt="BMVerse framework page" />
+        </div>
+      </div>
+    </section>
+
+    <section id="manifesto">
+      <div class="manifesto" data-reveal>
+        <div class="manifesto-copy">
+          <h2>Designed as a world, product, and signal</h2>
+          <p>This second pass is less decorative and more strategic. ANTverse now behaves like a premium crypto-native brand surface: art-led, system-aware, marketplace-ready, and able to host future utilities without redesigning the whole experience.</p>
+          <p>The core improvement is that BM Jewel, collection browsing, and social credibility now all live inside the same visual ecosystem. That gives the page a stronger sense of maturity and makes it easier to evolve into a real product site.</p>
+          <p class="small">The next step could be a true production build in React or Next.js with interactive filters, motion scenes, item detail pages, and CMS-backed collection management.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">Open collection</a>
+            <a class="btn secondary" href="#footer">See footer links</a>
+          </div>
+        </div>
+        <div class="manifesto-visual">
+          <div class="base"></div>
+          <div class="overlay"><img src="assets/antverse/diagram_page_4.png" alt="Traits framework overview" /></div>
+          <div class="logo"><img src="assets/antverse/collection/collection_logo.png" alt="Collection logo" /></div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="footer-mega" data-reveal>
+        <div class="footer-grid">
+          <div class="footer-panel">
+            <h3>ANTverse footer system</h3>
+            <p>This footer is now structured as a real brand anchor, not a closing line. It gives users clear exits into BMVerse channels, the collection page, and the broader ecosystem touchpoints.</p>
+            <div class="footer-inline">
+              <a href="https://opensea.io/es/collection/bmverse-mega-collection" target="_blank" rel="noreferrer">OpenSea Collection</a>
+              <a href="https://bmverse.io" target="_blank" rel="noreferrer">BMverse Website</a>
+              <a href="#marketplace">Assets View</a>
+              <a href="bm_jewels.html">BM Jewels</a>
+              <a href="bm_jewels.html">BM Jewels Page</a>
+            </div>
+          </div>
+          <div class="footer-panel">
+            <h3>Social and company links</h3>
+            <p>Clickable brand icons are included below so this one-page concept feels closer to a launch-ready landing page.</p>
+            <div class="social-links">
+              <a href="https://x.com/bmverseio" target="_blank" rel="noreferrer" aria-label="X">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.584-6.64 7.584H.47l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932Zm-1.291 19.49h2.039L6.486 3.25H4.298Z"/></svg>
+                <span>X</span>
+              </a>
+              <a href="https://www.crunchbase.com/organization/bmverse" target="_blank" rel="noreferrer" aria-label="Crunchbase">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h9.4a5 5 0 1 1 0 10H8.2v6H4V4Zm4.2 6h4.5a1 1 0 1 0 0-2H8.2v2Zm0 10H20v-4H8.2v4Z"/></svg>
+                <span>Crunchbase</span>
+              </a>
+              <a href="https://github.com/beautifullminds" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.42-4.04-1.42-.55-1.4-1.33-1.78-1.33-1.78-1.09-.75.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.08 1.84 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.53.12-3.19 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 6.32c1.02 0 2.05.14 3.01.41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.89.12 3.19.76.84 1.22 1.91 1.22 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.82 1.11.82 2.24v3.32c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+                <span>GitHub</span>
+              </a>
+              <a href="https://www.linkedin.com/company/bmverse" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.49 2.49 0 1 1 0 4.98 2.49 2.49 0 0 1 0-4.98ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.06c.53-1.01 1.83-2.08 3.77-2.08 4.03 0 4.77 2.65 4.77 6.09V21h-4v-5.58c0-1.33-.02-3.04-1.86-3.04-1.87 0-2.15 1.46-2.15 2.95V21h-4V9Z"/></svg>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://bmverse.medium.com/" target="_blank" rel="noreferrer" aria-label="Medium">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5c0-.3-.11-.58-.31-.8L2.1 4.2V4h6.18l4.78 10.48L17.25 4H23v.2l-1.35 1.29a.8.8 0 0 0-.24.77v11.48c-.03.29.06.59.24.82L23 19.8v.2h-6.85v-.2l1.4-1.36c.14-.14.14-.18.14-.4V8.76l-3.9 11.2h-.52L8.7 8.76v7.8c-.04.3.06.6.27.82l1.83 2.22v.2H5.6v-.2l1.83-2.22a1.07 1.07 0 0 0 .25-.82v-9c.02-.23-.07-.46-.23-.63L5.82 5.7A1 1 0 0 0 5.1 5.4H4v1.1Z"/></svg>
+                <span>Medium</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>ANTverse one-page concept built from BMVerse whitepaper visuals, traits framework pages, and BM Mega Collection imagery.</span>
+          <span>Enhanced with assets browsing, BM Jewel section, richer footer structure, and animated effects.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+
+    const toggles = document.querySelectorAll('[data-view-target]');
+    const views = {
+      assets: document.getElementById('view-assets'),
+      collection: document.getElementById('view-collection'),
+      jewel: document.getElementById('view-jewel')
+    };
+    toggles.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        toggles.forEach(x=>x.classList.remove('active'));
+        Object.values(views).forEach(v=>v.classList.remove('active'));
+        btn.classList.add('active');
+        views[btn.dataset.viewTarget].classList.add('active');
+      });
+    });
+
+    const glow = document.querySelector('.cursor-glow');
+    window.addEventListener('pointermove', (e)=>{
+      glow.style.transform = `translate(${e.clientX - 210}px, ${e.clientY - 210}px)`;
+    });
+
+    document.querySelectorAll('.js-tilt').forEach(card=>{
+      card.addEventListener('pointermove', (e)=>{
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rx = (0.5 - y) * 8;
+        const ry = (x - 0.5) * 10;
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      });
+      card.addEventListener('pointerleave', ()=>{
+        card.style.transform = '';
+      });
+    });
+  </script>
+</body>
+</html>
