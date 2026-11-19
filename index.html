@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMverse</title>
+  <title>BMverse | Explore the ecosystem</title>
+  <meta name="description" content="Explore BMverse, ETH-X, and the ANTverse collectible universe." />
   <style>
     :root{
       --bg:#05060b;
@@ -816,6 +817,7 @@
       .slide{padding:36px 0}
     }
   </style>
+  <link rel="stylesheet" href="assets/redesign/home.css" />
 </head>
 <body id="top">
   <div class="shell">
@@ -843,51 +845,28 @@
           <a href="#markets">Markets</a>
           <a href="#bmverse">BMverse</a>
           <a href="#ethx">ETH-X</a>
-          <a href="#antverse">ANTverse</a>
+          <a href="antverse/">ANTverse Marketplace</a>
           <a href="#team">Team</a>
           <a href="bm_jewels.html">BM Jewels</a>
         </div>
       </div>
     </nav>
 
-    <section class="slider">
+    <section class="slider" aria-label="Featured worlds">
       <div class="slides">
-        <article class="slide active" data-slide>
+        <article class="slide active" data-slide style="--slide-art:url('assets/redesign/ethx-hero.webp')">
           <div class="slide-copy">
-            <div class="eyebrow">Main ecosystem launch page</div>
-            <h1><span class="gradient">BMverse starts as one connected world</span></h1>
-            <p class="lead">This homepage is built as the main BMverse entry point: a cinematic slider first, then three clickable journey banners that lead users deeper into the core pillars of the ecosystem.</p>
-            <p class="lead alt">The structure brings together BMverse, ETH-X, and ANTverse in one brand system so the site opens like a public-facing ecosystem launch instead of disconnected pages.</p>
+            <div class="eyebrow">BMverse ecosystem</div>
+            <h1>One connected <span class="gradient">world.</span></h1>
+            <p class="lead">Explore the BMverse creator ecosystem, the ETH-X infrastructure vision, and the collectible world of ANTverse.</p>
             <div class="cta-row">
-              <a class="btn primary" href="#journeys">Start the journey</a>
-              <a class="btn secondary" href="bm_jewels.html">Open BM Jewels</a>
-            </div>
-            <div class="slider-controls">
-              <button class="dot active" data-dot="0" aria-label="Slide 1"></button>
-              <button class="dot" data-dot="1" aria-label="Slide 2"></button>
-              <button class="dot" data-dot="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="scroll-hint">Scroll or use the banners below to enter each pillar.</div>
-          </div>
-          <div class="slide-visual">
-            <div class="slide-panel" style="background-image:url('assets/bmverse-home/bmverse_home_ref.jpg')">
-              <div class="hero-card">
-                <img src="assets/bmverse-home/ethx_logo.jpg" alt="ETH-X logo" />
-                <strong>BMverse</strong>
-                <span>Not just a product page. A complete ecosystem with infrastructure, identity, and collectible culture.</span>
-              </div>
-              <div class="hero-note">
-                <div>
-                  <strong>Three connected layers</strong>
-                  <span>BMverse carries the vision, ETH-X carries the chain layer, and ANTverse carries the collectible world.</span>
-                </div>
-                <div class="hero-pill">Vision / Chain / World</div>
-              </div>
+              <a class="btn primary" href="antverse/">Explore ANTverse <span aria-hidden="true">↗</span></a>
+              <a class="btn secondary" href="#journeys">Discover BMverse</a>
             </div>
           </div>
         </article>
 
-        <article class="slide" data-slide>
+        <article class="slide" data-slide inert style="--slide-art:url('assets/bmverse-home/ethereum_ethx_bmverse.jpg')">
           <div class="slide-copy">
             <div class="eyebrow">Infrastructure layer</div>
             <h1><span class="gradient">ETH-X reframes Ethereum for the BMverse era</span></h1>
@@ -896,11 +875,6 @@
             <div class="cta-row">
               <a class="btn primary" href="#ethx">Explore ETH-X</a>
               <a class="btn secondary" href="https://bmverse.us/" target="_blank" rel="noreferrer">Visit live site</a>
-            </div>
-            <div class="slider-controls">
-              <button class="dot active" data-dot="0" aria-label="Slide 1"></button>
-              <button class="dot" data-dot="1" aria-label="Slide 2"></button>
-              <button class="dot" data-dot="2" aria-label="Slide 3"></button>
             </div>
             <div class="scroll-hint">ETH-X is the performance engine in the new homepage narrative.</div>
           </div>
@@ -922,7 +896,7 @@
           </div>
         </article>
 
-        <article class="slide" data-slide>
+        <article class="slide" data-slide inert style="--slide-art:url('assets/antverse/collection/queen_fariciah.jpg')">
           <div class="slide-copy">
             <div class="eyebrow">Collectible world</div>
             <h1><span class="gradient">ANTverse gives BMverse a world users can enter</span></h1>
@@ -930,12 +904,7 @@
             <p class="lead alt">This is where lore, collectible behavior, BM Jewels activation, rarity tiers, and community-facing market energy all converge into a stronger public story.</p>
             <div class="cta-row">
               <a class="btn primary" href="#antverse">Explore ANTverse</a>
-              <a class="btn secondary" href="antverse_one_page.html">Open ANTverse page</a>
-            </div>
-            <div class="slider-controls">
-              <button class="dot active" data-dot="0" aria-label="Slide 1"></button>
-              <button class="dot" data-dot="1" aria-label="Slide 2"></button>
-              <button class="dot" data-dot="2" aria-label="Slide 3"></button>
+              <a class="btn secondary" href="antverse/">Open Marketplace</a>
             </div>
             <div class="scroll-hint">The collectible layer transforms BMverse into a memorable world, not only a chain message.</div>
           </div>
@@ -956,6 +925,11 @@
             </div>
           </div>
         </article>
+      </div>
+      <div class="slider-controls" aria-label="Featured worlds">
+        <button class="dot active" type="button" data-dot="0" aria-pressed="true">BMverse</button>
+        <button class="dot" type="button" data-dot="1" aria-pressed="false">ETH-X</button>
+        <button class="dot" type="button" data-dot="2" aria-pressed="false">ANTverse</button>
       </div>
     </section>
 
@@ -1151,7 +1125,7 @@
             <span class="tag">Magical potion cards</span>
           </div>
           <div class="cta-row">
-            <a class="btn primary" href="antverse_one_page.html">Open ANTverse page</a>
+            <a class="btn primary" href="antverse/">Open Marketplace</a>
             <a class="btn secondary" href="bm_jewels.html">Open BM Jewels page</a>
           </div>
         </div>
@@ -1265,7 +1239,7 @@
         </div>
         <div class="footer-links">
           <a href="#top">Back to top</a>
-          <a href="antverse_one_page.html">ANTverse page</a>
+          <a href="antverse/">ANTverse Marketplace</a>
           <a href="bm_jewels.html">BM Jewels page</a>
           <a href="https://bmverse.us/" target="_blank" rel="noreferrer">Live bmverse.us</a>
           <a href="https://x.com/bmverseio" target="_blank" rel="noreferrer">X</a>
@@ -1286,28 +1260,18 @@
     document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
 
     const slides = [...document.querySelectorAll('[data-slide]')];
-    const dots = [...document.querySelectorAll('.slider-controls .dot')].filter((dot, i, arr)=> i < 3);
-    let current = 0;
-    function showSlide(index){
-      slides.forEach((slide, i)=>slide.classList.toggle('active', i === index));
-      document.querySelectorAll('.slider-controls').forEach(control=>{
-        [...control.querySelectorAll('.dot')].forEach((dot, i)=>dot.classList.toggle('active', i === index));
-      });
-      current = index;
-    }
-    document.querySelectorAll('.dot').forEach((dot)=>{
-      dot.addEventListener('click', ()=>{
-        const index = Number(dot.dataset.dot);
-        showSlide(index);
-        resetTimer();
+    const slideButtons = [...document.querySelectorAll('[data-dot]')];
+    slideButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        slides.forEach((slide, position) => {
+          const active = position === index;
+          slide.classList.toggle('active', active);
+          slide.inert = !active;
+          slideButtons[position].classList.toggle('active', active);
+          slideButtons[position].setAttribute('aria-pressed', String(active));
+        });
       });
     });
-    let timer = null;
-    function resetTimer(){
-      if(timer) clearInterval(timer);
-      timer = setInterval(()=>showSlide((current + 1) % slides.length), 5000);
-    }
-    resetTimer();
 
     const money = (value, digits = 2) => {
       if(value == null || Number.isNaN(value)) return 'Unavailable';
